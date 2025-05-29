@@ -1,0 +1,14 @@
+.ecv-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ecv-footer-para {
+  opacity: 0.6;
+}
+
+.ecv-footer-links {
+  color: var(--text-color);
+}

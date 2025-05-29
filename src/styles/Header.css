@@ -1,0 +1,38 @@
+.ecv-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 32px;
+}
+
+.ecv-header-title,
+.ecv-header-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ecv-header-title-img {
+  max-width: 45px;
+}
+
+.ecv-header-title-h1 {
+  font-size: 1.2rem;
+}
+
+.ecv-header-links-button {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 10px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.ecv-header-links-button:hover {
+  background-color: var(--button-hover);
+}
