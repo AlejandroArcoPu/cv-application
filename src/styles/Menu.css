@@ -1,14 +1,22 @@
-.ecv-edit-list {
+.ecv-menu {
+  width: 260px;
+  padding: 20px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ecv-menu-list {
   list-style-type: none;
   padding: 0px;
   margin: 0px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-width: 215px;
 }
 
-.ecv-edit-elementList {
+.ecv-menu-elementList {
   padding: 10px 15px;
   border-radius: 8px;
   font-weight: 500;
@@ -16,11 +24,11 @@
   cursor: pointer;
 }
 
-.ecv-edit-elementList:hover {
+.ecv-menu-elementList:hover {
   text-decoration: underline;
 }
 
-.ecv-edit-link {
+.ecv-menu-link {
   color: var(--text-color);
   text-decoration: none;
   display: flex;
@@ -34,4 +42,15 @@
 
 .is-selected:hover {
   text-decoration: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .ecv-menu {
+    width: 65px;
+    padding: 5px;
+  }
+
+  .ecv-menu-link-text {
+    display: none;
+  }
 }

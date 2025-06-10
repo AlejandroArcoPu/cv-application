@@ -1,24 +1,190 @@
 import "../styles/Cv.css";
+import { CircleUserRound, Mail, Phone, Linkedin } from "lucide-react";
+import Arrow from "../assets/Arrow";
+import {
+  GraduationCap,
+  Building2,
+  BrushCleaning,
+  Download,
+} from "lucide-react";
 
-export default function Cv({ educationData }) {
+export default function Cv({
+  educationData,
+  experienceData,
+  personalData,
+  extraData,
+  setExtraData,
+  setPersonalData,
+  setExperienceData,
+  setEducationData,
+}) {
+  const handleClean = () => {
+    setExtraData([]);
+    setExperienceData([]);
+    setEducationData([]);
+    setPersonalData({});
+  };
+
+  const skillFound = extraData.find((obj) => obj["skills"]);
+  const skillsChip = skillFound && Object.values(skillFound)[0];
+  const languageFound = extraData.find((obj) => obj["languages"]);
+  const languagesChip = languageFound && Object.values(languageFound)[0];
+
   return (
-    <div className="ecv-cv">
-      <section className="ecv-cv-education">
-        <h1 className="ecv-cv-education-title">Education</h1>
-        {educationData.map((education) => (
-          <article>
-            <h3 className="ecv-cv-education-article-educational">
-              {education.educational}
-            </h3>
-            <p className="ecv-cv-education-article-title">{education.title}</p>
-            <p className="ecv-cv-education-article-dates">
-              {education.start}
-              {education.end}
-            </p>
-          </article>
-        ))}
-        <article></article>
-      </section>
+    <div
+      className={
+        educationData.length === 0 &&
+        experienceData.length === 0 &&
+        Object.keys(personalData).length === 0
+          ? "ecv-cv no-data"
+          : "ecv-cv"
+      }
+    >
+      {educationData.length === 0 &&
+      experienceData.length === 0 &&
+      Object.keys(personalData).length === 0 ? (
+        <div className="ecv-cv-nodata">
+          <p className="ecv-cv-nodata-text">
+            Add data to see your{" "}
+            <span className="ecv-cv-nodata-highlight">new CV!</span>
+          </p>
+        </div>
+      ) : (
+        <>
+          <div className="ecv-cv-buttons no-data">
+            <button
+              type="button"
+              className="ecv-cv-button"
+              onClick={handleClean}
+            >
+              <BrushCleaning />
+            </button>
+            <button type="button" className="ecv-cv-button">
+              <Download />
+            </button>
+          </div>
+          {Object.keys(personalData).length !== 0 && (
+            <>
+              <div className="ecv-cv-container-photo">
+                {personalData.photo ? (
+                  <img
+                    className="ecv-cv-photo"
+                    src={personalData.photo}
+                    alt=""
+                  />
+                ) : (
+                  <CircleUserRound width="80" height="80" />
+                )}
+              </div>
+              <section className="ecv-cv-personal">
+                <h1 className="ecv-cv-personal-title">{personalData.name}</h1>
+                <p className="ecv-cv-personal-role">{personalData.role}</p>
+                <p className="ecv-cv-personal-contact">
+                  {personalData.telephone}
+                  {" | "}
+                  {personalData.email}
+                  {" | "}
+                  {personalData.linkedin}
+                </p>
+              </section>
+              <section className="ecv-cv-shortbio">
+                <h3 className="ecv-cv-shortbio-title">Short bio</h3>
+                <p className="ecv-cv-shortbio-text">{personalData.bio}</p>
+                <h3 className="ecv-cv-shortbio-title">Skills</h3>
+                <div className="ecv-cv-chips">
+                  {skillsChip &&
+                    skillsChip.map((val) => (
+                      <p key={val} className="ecv-cv-chip">
+                        {val}
+                      </p>
+                    ))}
+                </div>
+                <h3 className="ecv-cv-shortbio-title">Languages</h3>
+                <div className="ecv-cv-chips">
+                  {languagesChip &&
+                    languagesChip.map((val) => (
+                      <p key={val} className="ecv-cv-chip">
+                        {val}
+                      </p>
+                    ))}
+                </div>
+              </section>
+            </>
+          )}
+          <section className="ecv-cv-section">
+            <h1 className="ecv-cv-subsection-title">Education</h1>
+            {educationData.map((education) => (
+              <article
+                key={education.title}
+                className="ecv-cv-subsection-article"
+              >
+                {education.logo === "" ? (
+                  <div className="ecv-cv-nophoto">
+                    <GraduationCap width="40" height="40" />
+                  </div>
+                ) : (
+                  <img
+                    className="ecv-cv-photo-logo"
+                    src={education.logo}
+                    alt={education.educational + " logo"}
+                  />
+                )}
+                <div>
+                  <h3 className="ecv-cv-subsection-article-title">
+                    {education.educational}
+                  </h3>
+                  {/* <div className="ecv-cv-subsection-article-first"> */}
+                  <p className="ecv-cv-subsection-article-subtitle">
+                    {education.location} • {education.title}
+                  </p>
+                  <p className="ecv-cv-subsection-article-dates">
+                    {education.start} - {education.end}
+                  </p>
+                  {/* </div> */}
+                  <p className="ecv-cv-subsection-article-description">
+                    {education.learnings}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </section>
+          <section className="ecv-cv-section">
+            <h1 className="ecv-cv-subsection-title">Work Experience</h1>
+            {experienceData.map((experience) => (
+              <article
+                key={experience.company}
+                className="ecv-cv-subsection-article"
+              >
+                {experience.logo === "" ? (
+                  <div className="ecv-cv-nophoto">
+                    <Building2 width="40" height="40" />
+                  </div>
+                ) : (
+                  <img
+                    className="ecv-cv-photo-logo"
+                    src={experience.logo}
+                    alt={experience.company + " logo"}
+                  />
+                )}
+                <div>
+                  <h3 className="ecv-cv-subsection-article-title">
+                    {experience.role}
+                  </h3>
+                  <p className="ecv-cv-subsection-article-subtitle">
+                    {experience.company}
+                  </p>
+                  <p className="ecv-cv-subsection-article-dates">
+                    {experience.start} - {experience.end}
+                  </p>
+                  <p className="ecv-cv-subsection-article-description">
+                    {experience.responsibilities}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </section>
+        </>
+      )}
     </div>
   );
 }

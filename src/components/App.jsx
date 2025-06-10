@@ -13,7 +13,6 @@ function App() {
   return (
     <div className={nightMode ? "app dark" : "app"}>
       <Header nightMode={nightMode} setNightMode={setNightMode} />
-      <Divider height="1px" opacity="0.1" />
       <main>
         <Edit />
       </main>

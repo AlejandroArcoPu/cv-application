@@ -1,10 +1,11 @@
-import { User, School, BriefcaseBusiness } from "lucide-react";
+import { User, School, BriefcaseBusiness, CircleCheckBig } from "lucide-react";
 import "../styles/Menu.css";
 
 const menuElements = [
   { name: "Personal Information", icon: <User /> },
   { name: "Education", icon: <School /> },
   { name: "Experience", icon: <BriefcaseBusiness /> },
+  { name: "Extra", icon: <CircleCheckBig /> },
 ];
 
 export default function Menu({ active, setActive }) {
@@ -12,22 +13,22 @@ export default function Menu({ active, setActive }) {
     setActive(elementName);
   };
   return (
-    <aside>
+    <aside className="ecv-menu">
       <nav>
-        <ul className="ecv-edit-list">
+        <ul className="ecv-menu-list">
           {menuElements.map((element) => (
             <li
               key={element.name}
               onClick={() => handleActive(element.name)}
               className={
                 active === element.name
-                  ? "ecv-edit-elementList is-selected"
-                  : "ecv-edit-elementList"
+                  ? "ecv-menu-elementList is-selected"
+                  : "ecv-menu-elementList"
               }
             >
-              <a className="ecv-edit-link" href="#">
+              <a className="ecv-menu-link" href="#">
                 {element.icon}
-                {element.name}
+                <span className="ecv-menu-link-text">{element.name}</span>
               </a>
             </li>
           ))}

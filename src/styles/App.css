@@ -4,6 +4,7 @@
   color: var(--text-color);
   display: grid;
   grid-template-rows: auto 1fr auto;
+  justify-items: center;
 }
 
 .app.dark {
@@ -11,10 +12,12 @@
   --text-color: #ffffffde;
   --button-hover: #5050507b;
   --border: #505050;
-  --shadow: #33333325;
+  --shadow: rgba(255, 255, 255, 0.109);
 }
 
 main {
-  padding: 10px 20px;
+  padding: 10px 0px;
   overflow: hidden;
+  max-width: 2100px;
+  width: 100%;
 }

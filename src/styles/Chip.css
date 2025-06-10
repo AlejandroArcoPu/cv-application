@@ -1,0 +1,26 @@
+.ecv-chip {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.ecv-chip-keys {
+  border: 1px solid var(--border);
+  color: var(--text-color);
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin: 0px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ecv-chips-keys-remove {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: none;
+  padding: 0px;
+  cursor: pointer;
+}

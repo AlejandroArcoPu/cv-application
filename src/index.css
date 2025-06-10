@@ -3,7 +3,7 @@
   --text-color: #242424;
   --button-hover: #cccccc;
   --border: #acacac;
-  --shadow: rgba(255, 255, 255, 0.05);
+  --shadow: #33333325;
 }
 
 body {
@@ -43,4 +43,17 @@ button,
 textarea,
 select {
   font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }

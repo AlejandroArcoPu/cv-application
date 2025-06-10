@@ -1,7 +1,9 @@
 .ecv-header {
   display: flex;
   justify-content: space-between;
-  padding: 10px 32px;
+  padding: 10px 20px;
+  max-width: 2100px;
+  width: 100%;
 }
 
 .ecv-header-title,

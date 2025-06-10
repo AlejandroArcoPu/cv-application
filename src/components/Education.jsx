@@ -1,13 +1,15 @@
 import HeaderForm from "./HeaderForm";
+import AddedItem from "./AddedItem";
 import Form from "./Form";
 import { education } from "../data/formsElements";
 
 export default function Education({
-  title,
-  subtitle,
   active,
   handleEducationData,
   educationData,
+  removeEducationData,
+  title,
+  subtitle,
 }) {
   return (
     <div
@@ -16,10 +18,21 @@ export default function Education({
       }
     >
       <HeaderForm title={title} subtitle={subtitle} />
+      {educationData.map((education) => (
+        <AddedItem
+          key={education.id}
+          id={education.id}
+          title={education.educational}
+          subtitle={education.title}
+          start={education.start}
+          end={education.end}
+          remove={removeEducationData}
+        />
+      ))}
       <Form
         formElements={education}
         buttonName="Add"
-        onChange={handleEducationData}
+        onSubmit={handleEducationData}
       />
     </div>
   );

@@ -1,0 +1,38 @@
+.ecv-addedItem {
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 12px 20px;
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+}
+
+.ecv-addedItem-title,
+.ecv-addedItem-subtitle,
+.ecv-addedItem-dates {
+  margin: 0px;
+}
+
+.ecv-addedItem-title {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.ecv-addedItem-subtitle {
+  font-size: 0.9rem;
+}
+
+.ecv-addedItem-dates {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.ecv-addedItem-trash {
+  position: absolute;
+  cursor: pointer;
+  top: 10px;
+  right: 10px;
+}
+.ecv-addedItem-trash:hover {
+  color: #f98686;
+}
