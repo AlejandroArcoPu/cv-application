@@ -51,7 +51,7 @@ export default function Cv({
         scale: 3, // Increase for better resolution (default is 1)
         useCORS: true, // For loading external images/fonts
       },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
     };
     await html2pdf().set(opt).from(element).save();
     buttons.style.display = "flex";
