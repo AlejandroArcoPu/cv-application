@@ -1,14 +1,13 @@
 import "../styles/Edit.css";
 import Divider from "./Divider";
 import Underline from "../assets/Underline";
-
+import { fileToBase64 } from "../utils/fileToBase64";
 import Menu from "./Menu";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Forms from "./Forms";
 import Cv from "./Cv";
 import formatDate from "../utils/formatDate";
 import guidGenerator from "../utils/guidGenerator";
-import { useForm } from "react-hook-form";
 
 export default function Edit() {
   const [active, setActive] = useState("Personal Information");
@@ -17,13 +16,12 @@ export default function Edit() {
   const [personalData, setPersonalData] = useState({});
   const [extraData, setExtraData] = useState([]);
 
-  const { resetField, reset } = useForm();
-
   const removeEducationData = (id) => {
     const newEducationData = educationData.filter(
       (education) => education.id !== id
     );
     setEducationData(newEducationData);
+    localStorage.setItem("educationData", JSON.stringify(newEducationData));
   };
 
   const removeExperienceData = (id) => {
@@ -31,104 +29,120 @@ export default function Edit() {
       (experience) => experience.id !== id
     );
     setExperienceData(newExperienceData);
+    localStorage.setItem("experienceData", JSON.stringify(newExperienceData));
   };
 
-  const handlePersonalData = (e) => {
-    const file = e.photo[0];
-    const url = URL.createObjectURL(file);
-    const newPersonal = { ...e, photo: url };
-    setPersonalData(newPersonal);
+  const handlePersonalData = (data) => {
+    const file = data.photo?.[0];
+
+    const savePersonal = (photo) => {
+      const newPersonal = {
+        ...data,
+        photo: photo,
+      };
+      setPersonalData(newPersonal);
+      localStorage.setItem("personalData", JSON.stringify(newPersonal));
+    };
+
+    if (file) {
+      fileToBase64(file)
+        .then((base64) => {
+          savePersonal(base64);
+        })
+        .catch((err) => {
+          console.error("Error converting file to base64:", err);
+          savePersonal(null);
+        });
+    } else {
+      savePersonal(null);
+    }
   };
 
-  const handleEducationData = (e) => {
-    e.preventDefault();
-    const newEducation = {};
+  const handleEducationData = (data) => {
+    const file = data.logo?.[0];
 
-    Array.from(e.target.elements)
-      .filter(
-        (element) =>
-          (element.tagName === "INPUT" || element.tagName === "TEXTAREA") &&
-          element.name
-      )
-      .forEach((element) => {
-        if (element.type === "month") {
-          if (element.value === "") {
-            newEducation[element.name] = "Present";
-          } else {
-            newEducation[element.name] = formatDate(element.value);
-          }
-        } else if (element.type === "file") {
-          newEducation[element.name] = "";
-          const fileInput = e.target.elements.logo;
-          if (fileInput && fileInput.files[0]) {
-            const file = fileInput.files[0];
-            const url = URL.createObjectURL(file);
-            newEducation[element.name] = url;
-          }
-        } else {
-          newEducation[element.name] = element.value;
-        }
-        element.value = "";
+    const saveEducation = (logo) => {
+      const newEducation = {
+        ...data,
+        id: guidGenerator(),
+        logo: logo,
+        start: formatDate(data.start),
+        end: !data.end || data.end === "" ? "present" : formatDate(data.end),
+      };
+
+      setEducationData((prev) => {
+        const updated = [...prev, newEducation];
+        localStorage.setItem("educationData", JSON.stringify(updated));
+        return updated;
       });
+    };
 
-    newEducation["id"] = guidGenerator();
-    setEducationData((prev) => [...prev, newEducation]);
+    if (file) {
+      fileToBase64(file)
+        .then((base64) => {
+          saveEducation(base64);
+        })
+        .catch((err) => {
+          console.error("Error converting file to base64:", err);
+          saveEducation(null);
+        });
+    } else {
+      saveEducation(null);
+    }
   };
 
-  const handleExperienceData = (e) => {
-    e.preventDefault();
-    const newExperience = {};
+  const handleExperienceData = (data) => {
+    const file = data.logo?.[0];
 
-    Array.from(e.target.elements)
-      .filter(
-        (element) =>
-          (element.tagName === "INPUT" || element.tagName === "TEXTAREA") &&
-          element.name
-      )
-      .forEach((element) => {
-        if (element.type === "month") {
-          if (element.value === "") {
-            newExperience[element.name] = "present";
-          } else {
-            newExperience[element.name] = formatDate(element.value);
-          }
-        } else if (element.type === "file") {
-          newExperience[element.name] = "";
-          const fileInput = e.target.elements.logo;
-          if (fileInput && fileInput.files[0]) {
-            const file = fileInput.files[0];
-            const url = URL.createObjectURL(file);
-            newExperience[element.name] = url;
-          }
-        } else {
-          newExperience[element.name] = element.value;
-        }
-        element.value = "";
+    const saveExperience = (logo) => {
+      const newExperience = {
+        ...data,
+        id: guidGenerator(),
+        logo: logo,
+        start: formatDate(data.start),
+        end: !data.end || data.end === "" ? "present" : formatDate(data.end),
+      };
+      setExperienceData((prev) => {
+        const updated = [...prev, newExperience];
+        localStorage.setItem("experienceData", JSON.stringify(updated));
+        return updated;
       });
-    newExperience["id"] = guidGenerator();
-    setExperienceData((prev) => [...prev, newExperience]);
+    };
+
+    if (file) {
+      fileToBase64(file)
+        .then((base64) => {
+          saveExperience(base64);
+        })
+        .catch((err) => {
+          console.error("Error converting file to base64:", err);
+          saveExperience(null);
+        });
+    } else {
+      saveExperience(null);
+    }
   };
 
   const handleExtraData = (e, name, max) => {
     const value = e.target.value.trim();
     if (e.key === "," && value) {
       e.preventDefault();
-
       const index = extraData.findIndex((obj) => obj[name]);
-
       const updatedData = [...extraData];
-
       if (index !== -1) {
         const existingValues = updatedData[index][name];
-
         if (!existingValues.includes(value) && existingValues.length < max) {
           updatedData[index][name] = [...existingValues, value];
           setExtraData(updatedData);
+          localStorage.setItem("extraData", JSON.stringify(updatedData));
         }
       } else {
         setExtraData([...extraData, { [name]: [value] }]);
+        localStorage.setItem(
+          "extraData",
+          JSON.stringify([...extraData, { [name]: [value] }])
+        );
       }
-
       e.target.value = "";
     }
   };
@@ -139,7 +153,32 @@ export default function Edit() {
       (c) => c !== chip
     );
     setExtraData(newExtraData);
+    localStorage.setItem("extraData", JSON.stringify([newExtraData]));
   };
+
+  useEffect(() => {
+    const savedPersonalData = JSON.parse(localStorage.getItem("personalData"));
+    const savedExperienceData = JSON.parse(
+      localStorage.getItem("experienceData")
+    );
+    const savedEducationData = JSON.parse(
+      localStorage.getItem("educationData")
+    );
+    const savedExtraData = JSON.parse(localStorage.getItem("extraData"));
+    if (savedPersonalData) {
+      setPersonalData(savedPersonalData);
+    }
+    if (savedExperienceData) {
+      setExperienceData(savedExperienceData);
+    }
+    if (savedEducationData) {
+      setEducationData(savedEducationData);
+    }
+
+    if (savedExtraData) {
+      setExtraData(savedExtraData);
+    }
+  }, []);
 
   return (
     <section className="ecv-edit">

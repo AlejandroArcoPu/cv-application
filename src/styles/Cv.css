@@ -90,7 +90,7 @@
 .ecv-cv-subsection-article-description {
   opacity: 0.4;
   margin-top: 10px;
-  word-break: break-all;
+  /* word-break: break-all; */
 }
 
 .no-data {
@@ -119,6 +119,10 @@
 .ecv-cv-chips {
   display: flex;
   gap: 10px;
+}
+
+.ecv-cv-chips {
+  flex-wrap: wrap;
 }
 
 .ecv-cv-subsection-article-first {
