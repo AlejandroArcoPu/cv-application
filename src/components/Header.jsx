@@ -1,5 +1,6 @@
 import "../styles/Header.css";
 import { Sun, Moon, Github } from "lucide-react";
+import logo from "../assets/logo.svg";
 
 export default function Header({ nightMode, setNightMode }) {
   return (
@@ -8,7 +9,7 @@ export default function Header({ nightMode, setNightMode }) {
         <div className="ecv-header-title">
           <img
             className="ecv-header-title-img"
-            src="../../public/logo.svg"
+            src={logo}
             alt="EasyCV app logo, with a gradient background and a paper simulating a cv."
           />
           <h1 className="ecv-header-title-h1">EasyCV</h1>

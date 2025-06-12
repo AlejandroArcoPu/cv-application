@@ -3,7 +3,7 @@ import "../styles/Form.css";
 import HeaderForm from "./HeaderForm";
 import { Calendar } from "lucide-react";
 import Checkbox from "./Checkbox";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Chip from "./Chip";
 import { useForm } from "react-hook-form";
 
@@ -13,12 +13,20 @@ export default function Form({ formElements, buttonName, onSubmit }) {
   const {
     register,
     handleSubmit,
+    formState,
+    reset,
     formState: { errors },
   } = useForm();
 
   const handleChecked = () => {
     setChecked(!checked);
   };
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset();
+    }
+  }, [formState, reset]);
 
   return (
     <form action="" className="ecv-form" onSubmit={handleSubmit(onSubmit)}>
@@ -35,7 +43,6 @@ export default function Form({ formElements, buttonName, onSubmit }) {
             <Checkbox
               label={element.label}
               description={element.description}
-              required={element.required}
               checked={checked}
               handleChecked={handleChecked}
             />

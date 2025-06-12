@@ -1,6 +1,7 @@
 import "../styles/Cv.css";
-import { CircleUserRound, Mail, Phone, Linkedin } from "lucide-react";
-import Arrow from "../assets/Arrow";
+import { CircleUserRound } from "lucide-react";
+import { useRef } from "react";
+import html2pdf from "html2pdf.js";
 import {
   GraduationCap,
   Building2,
@@ -23,6 +24,10 @@ export default function Cv({
     setExperienceData([]);
     setEducationData([]);
     setPersonalData({});
+    localStorage.setItem("extraData", JSON.stringify([]));
+    localStorage.setItem("experienceData", JSON.stringify([]));
+    localStorage.setItem("educationData", JSON.stringify([]));
+    localStorage.setItem("personalData", JSON.stringify({}));
   };
 
   const skillFound = extraData.find((obj) => obj["skills"]);
@@ -30,8 +35,31 @@ export default function Cv({
   const languageFound = extraData.find((obj) => obj["languages"]);
   const languagesChip = languageFound && Object.values(languageFound)[0];
 
+  const cvToBeImportedRef = useRef(null);
+  const cvButtonsRef = useRef(null);
+
+  const handleGeneratePdf = async () => {
+    const element = cvToBeImportedRef.current;
+    const buttons = cvButtonsRef.current;
+    buttons.style.display = "none";
+    console.log(buttons.style);
+    var opt = {
+      margin: 0,
+      filename: "easy-cv.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: {
+        scale: 3, // Increase for better resolution (default is 1)
+        useCORS: true, // For loading external images/fonts
+      },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    };
+    await html2pdf().set(opt).from(element).save();
+    buttons.style.display = "flex";
+  };
+
   return (
     <div
+      ref={cvToBeImportedRef}
       className={
         educationData.length === 0 &&
         experienceData.length === 0 &&
@@ -51,7 +79,7 @@ export default function Cv({
         </div>
       ) : (
         <>
-          <div className="ecv-cv-buttons no-data">
+          <div ref={cvButtonsRef} className="ecv-cv-buttons no-data">
             <button
               type="button"
               className="ecv-cv-button"
@@ -59,7 +87,11 @@ export default function Cv({
             >
               <BrushCleaning />
             </button>
-            <button type="button" className="ecv-cv-button">
+            <button
+              type="button"
+              className="ecv-cv-button"
+              onClick={handleGeneratePdf}
+            >
               <Download />
             </button>
           </div>
@@ -118,16 +150,16 @@ export default function Cv({
                 key={education.title}
                 className="ecv-cv-subsection-article"
               >
-                {education.logo === "" ? (
-                  <div className="ecv-cv-nophoto">
-                    <GraduationCap width="40" height="40" />
-                  </div>
-                ) : (
+                {education.logo ? (
                   <img
                     className="ecv-cv-photo-logo"
                     src={education.logo}
                     alt={education.educational + " logo"}
                   />
+                ) : (
+                  <div className="ecv-cv-nophoto">
+                    <GraduationCap width="40" height="40" />
+                  </div>
                 )}
                 <div>
                   <h3 className="ecv-cv-subsection-article-title">
@@ -135,7 +167,7 @@ export default function Cv({
                   </h3>
                   {/* <div className="ecv-cv-subsection-article-first"> */}
                   <p className="ecv-cv-subsection-article-subtitle">
-                    {education.location} • {education.title}
+                    {education.title} • {education.location}
                   </p>
                   <p className="ecv-cv-subsection-article-dates">
                     {education.start} - {education.end}
@@ -155,23 +187,23 @@ export default function Cv({
                 key={experience.company}
                 className="ecv-cv-subsection-article"
               >
-                {experience.logo === "" ? (
-                  <div className="ecv-cv-nophoto">
-                    <Building2 width="40" height="40" />
-                  </div>
-                ) : (
+                {experience.logo ? (
                   <img
                     className="ecv-cv-photo-logo"
                     src={experience.logo}
                     alt={experience.company + " logo"}
                   />
+                ) : (
+                  <div className="ecv-cv-nophoto">
+                    <Building2 width="40" height="40" />
+                  </div>
                 )}
                 <div>
                   <h3 className="ecv-cv-subsection-article-title">
                     {experience.role}
                   </h3>
                   <p className="ecv-cv-subsection-article-subtitle">
-                    {experience.company}
+                    {experience.company} • {experience.location}
                   </p>
                   <p className="ecv-cv-subsection-article-dates">
                     {experience.start} - {experience.end}

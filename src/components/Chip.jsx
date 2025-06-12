@@ -28,7 +28,7 @@ export default function Chip({
                 className="ecv-chips-keys-remove"
                 onClick={() => removeExtraData(index, chip, name)}
               >
-                <X width="18" />
+                <X width="15" />
               </button>
             </p>
           ))}
