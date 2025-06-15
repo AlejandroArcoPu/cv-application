@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import CvPdf from "./CvPdf";
+import Arrow from "../assets/Arrow";
 
 export default function Cv({
   educationData,
@@ -57,6 +58,10 @@ export default function Cv({
       ) : (
         <>
           <div className="ecv-cv-buttons no-data">
+            <div className="ecv-cv-details">
+              <p className="ecv-cv-details-text">Download your CV for free!</p>
+              <Arrow width={80} color="#ed89ce" cls="ecv-cv-details-arrow " />
+            </div>
             <button
               type="button"
               className="ecv-cv-button"
