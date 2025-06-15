@@ -12,6 +12,27 @@
   position: relative;
 }
 
+.ecv-cv-details {
+  top: -75px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transform: rotate(-15deg);
+}
+
+.ecv-cv-details-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #ed89ce;
+}
+
+.ecv-cv-details-arrow {
+  align-self: flex-end;
+  transform: rotate(-75deg);
+}
+
 .ecv-cv-container-photo {
   display: flex;
   justify-content: center;

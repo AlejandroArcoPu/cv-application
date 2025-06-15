@@ -1,6 +1,6 @@
 import "../styles/Header.css";
 import { Sun, Moon, Github } from "lucide-react";
-import logo from "../assets/logo.svg";
+import logo from "../assets/icon.avif";
 
 export default function Header({ nightMode, setNightMode }) {
   return (
