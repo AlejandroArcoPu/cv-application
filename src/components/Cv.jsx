@@ -6,7 +6,7 @@ import {
   BrushCleaning,
   Download,
 } from "lucide-react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { PDFDownloadLink, usePDF } from "@react-pdf/renderer";
 import CvPdf from "./CvPdf";
 import Arrow from "../assets/Arrow";
 
@@ -35,6 +35,9 @@ export default function Cv({
   const skillsChip = skillFound && Object.values(skillFound)[0];
   const languageFound = extraData.find((obj) => obj["languages"]);
   const languagesChip = languageFound && Object.values(languageFound)[0];
+  //   const [pdf] = usePDF({
+  //     document: <CvPdf />,
+  //   });
 
   return (
     <div
@@ -81,11 +84,9 @@ export default function Cv({
                   experienceData={experienceData}
                 />
               }
-              fileName="EasyCV.pdf"
+              fileName="easycv.pdf"
             >
-              {({ blob, url, loading, error }) =>
-                loading ? "Loading document..." : <Download />
-              }
+              {({ blob, url, loading, error }) => (loading ? "" : <Download />)}
             </PDFDownloadLink>
           </div>
           {Object.keys(personalData).length !== 0 && (
