@@ -1,13 +1,14 @@
 import "../styles/Edit.css";
-import Divider from "./Divider";
 import Underline from "../assets/Underline";
 import { fileToBase64 } from "../utils/fileToBase64";
 import Menu from "./Menu";
 import { useState, useEffect } from "react";
 import Forms from "./Forms";
 import Cv from "./Cv";
+import CvPdf from "./CvPdf";
 import formatDate from "../utils/formatDate";
 import guidGenerator from "../utils/guidGenerator";
+import { PDFViewer } from "@react-pdf/renderer";
 
 export default function Edit() {
   const [active, setActive] = useState("Personal Information");

@@ -1,13 +1,13 @@
 import "../styles/Cv.css";
 import { CircleUserRound } from "lucide-react";
-import { useRef } from "react";
-import html2pdf from "html2pdf.js";
 import {
   GraduationCap,
   Building2,
   BrushCleaning,
   Download,
 } from "lucide-react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import CvPdf from "./CvPdf";
 
 export default function Cv({
   educationData,
@@ -35,31 +35,8 @@ export default function Cv({
   const languageFound = extraData.find((obj) => obj["languages"]);
   const languagesChip = languageFound && Object.values(languageFound)[0];
 
-  const cvToBeImportedRef = useRef(null);
-  const cvButtonsRef = useRef(null);
-
-  const handleGeneratePdf = async () => {
-    const element = cvToBeImportedRef.current;
-    const buttons = cvButtonsRef.current;
-    buttons.style.display = "none";
-    console.log(buttons.style);
-    var opt = {
-      margin: 0,
-      filename: "easy-cv.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: {
-        scale: 3, // Increase for better resolution (default is 1)
-        useCORS: true, // For loading external images/fonts
-      },
-      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-    };
-    await html2pdf().set(opt).from(element).save();
-    buttons.style.display = "flex";
-  };
-
   return (
     <div
-      ref={cvToBeImportedRef}
       className={
         educationData.length === 0 &&
         experienceData.length === 0 &&
@@ -79,7 +56,7 @@ export default function Cv({
         </div>
       ) : (
         <>
-          <div ref={cvButtonsRef} className="ecv-cv-buttons no-data">
+          <div className="ecv-cv-buttons no-data">
             <button
               type="button"
               className="ecv-cv-button"
@@ -87,13 +64,24 @@ export default function Cv({
             >
               <BrushCleaning />
             </button>
-            <button
-              type="button"
+
+            <PDFDownloadLink
               className="ecv-cv-button"
-              onClick={handleGeneratePdf}
+              document={
+                <CvPdf
+                  personalData={personalData}
+                  skillsChip={skillsChip}
+                  languagesChip={languagesChip}
+                  educationData={educationData}
+                  experienceData={experienceData}
+                />
+              }
+              fileName="EasyCV.pdf"
             >
-              <Download />
-            </button>
+              {({ blob, url, loading, error }) =>
+                loading ? "Loading document..." : <Download />
+              }
+            </PDFDownloadLink>
           </div>
           {Object.keys(personalData).length !== 0 && (
             <>
@@ -165,14 +153,12 @@ export default function Cv({
                   <h3 className="ecv-cv-subsection-article-title">
                     {education.educational}
                   </h3>
-                  {/* <div className="ecv-cv-subsection-article-first"> */}
                   <p className="ecv-cv-subsection-article-subtitle">
                     {education.title} • {education.location}
                   </p>
                   <p className="ecv-cv-subsection-article-dates">
                     {education.start} - {education.end}
                   </p>
-                  {/* </div> */}
                   <p className="ecv-cv-subsection-article-description">
                     {education.learnings}
                   </p>
