@@ -1,10 +1,8 @@
 import { useState } from "react";
 import "../styles/App.css";
 import Footer from "./Footer";
-import Divider from "./Divider";
 
 import Header from "./Header";
-import Cv from "./Cv";
 import Edit from "./Edit";
 
 function App() {
