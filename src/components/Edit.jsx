@@ -222,14 +222,6 @@ export default function Edit() {
           setEducationData={setEducationData}
         />
       </div>
-      {/* <PDFViewer width={600} height={800}>
-        <CvPdf
-          personalData={personalData}
-          extraData={extraData}
-          experienceData={experienceData}
-          educationData={educationData}
-        />
-      </PDFViewer> */}
     </section>
   );
 }

@@ -1,7 +1,5 @@
 import "../styles/Cv.css";
 import { CircleUserRound } from "lucide-react";
-import { useRef } from "react";
-import html2pdf from "html2pdf.js";
 import {
   GraduationCap,
   Building2,
@@ -37,31 +35,8 @@ export default function Cv({
   const languageFound = extraData.find((obj) => obj["languages"]);
   const languagesChip = languageFound && Object.values(languageFound)[0];
 
-  //   const cvToBeImportedRef = useRef(null);
-  //   const cvButtonsRef = useRef(null);
-
-  //   const handleGeneratePdf = async () => {
-  //     const element = cvToBeImportedRef.current;
-  //     const buttons = cvButtonsRef.current;
-  //     buttons.style.display = "none";
-  //     console.log(buttons.style);
-  //     var opt = {
-  //       margin: 0,
-  //       filename: "easy-cv.pdf",
-  //       image: { type: "jpeg", quality: 0.98 },
-  //       html2canvas: {
-  //         scale: 3, // Increase for better resolution (default is 1)
-  //         useCORS: true, // For loading external images/fonts
-  //       },
-  //       jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-  //     };
-  //     await html2pdf().set(opt).from(element).save();
-  //     buttons.style.display = "flex";
-  //   };
-
   return (
     <div
-      //   ref={cvToBeImportedRef}
       className={
         educationData.length === 0 &&
         experienceData.length === 0 &&
