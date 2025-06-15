@@ -10,6 +10,7 @@ import {
 import "../styles/Cv.css";
 import graduation from "../assets/graduation.png";
 import building from "../assets/building.png";
+import user3 from "../assets/user3.png";
 
 const styles = StyleSheet.create({
   cv: {
@@ -117,8 +118,10 @@ export default function CvPdf({
         {Object.keys(personalData).length !== 0 && (
           <>
             <View style={styles.containerImage}>
-              {personalData.photo && (
+              {personalData.photo ? (
                 <Image style={styles.image} src={personalData.photo} />
+              ) : (
+                <Image style={styles.image} src={user3} />
               )}
               <View style={styles.personal}>
                 <Text style={styles.title}>{personalData.name}</Text>
@@ -138,76 +141,82 @@ export default function CvPdf({
             <View>
               <Text style={styles.subtitle}>Skills</Text>
               <View style={styles.chipContainer}>
-                {skillsChip.map((skill, index) => (
-                  <Text key={index} style={styles.chip}>
-                    {skill}
-                  </Text>
-                ))}
+                {skillsChip &&
+                  skillsChip.map((skill, index) => (
+                    <Text key={index} style={styles.chip}>
+                      {skill}
+                    </Text>
+                  ))}
               </View>
             </View>
             <View>
               <Text style={styles.subtitle}>Languages</Text>
               <View style={styles.chipContainer}>
-                {languagesChip.map((lang, index) => (
-                  <Text key={index} style={styles.chip}>
-                    {lang}
-                  </Text>
-                ))}
+                {languagesChip &&
+                  languagesChip.map((lang, index) => (
+                    <Text key={index} style={styles.chip}>
+                      {lang}
+                    </Text>
+                  ))}
               </View>
             </View>
           </>
         )}
         <View style={styles.section}>
           <Text style={styles.subtitle}>Education</Text>
-          {educationData.map((education) => (
-            <View key={education.title} style={styles.article}>
-              {education.logo ? (
-                <Image style={styles.logo} src={education.logo} />
-              ) : (
-                <Image style={styles.logo} src={graduation} />
-              )}
-              <View>
-                <Text style={styles.articleTitle}>{education.educational}</Text>
-                <Text style={styles.articleSubtitle}>
-                  {education.title} • {education.location}
-                </Text>
-                <Text style={styles.articleDates}>
-                  {education.start} - {education.end}
-                </Text>
-                <Text style={styles.articleDescription}>
-                  {education.learnings}
-                </Text>
+          {educationData &&
+            educationData.map((education) => (
+              <View key={education.title} style={styles.article}>
+                {education.logo ? (
+                  <Image style={styles.logo} src={education.logo} />
+                ) : (
+                  <Image style={styles.logo} src={graduation} />
+                )}
+                <View>
+                  <Text style={styles.articleTitle}>
+                    {education.educational}
+                  </Text>
+                  <Text style={styles.articleSubtitle}>
+                    {education.title} • {education.location}
+                  </Text>
+                  <Text style={styles.articleDates}>
+                    {education.start} - {education.end}
+                  </Text>
+                  <Text style={styles.articleDescription}>
+                    {education.learnings}
+                  </Text>
+                </View>
               </View>
-            </View>
-          ))}
+            ))}
         </View>
         <View style={styles.section}>
           <Text style={styles.subtitle}>Work Experience</Text>
-          {experienceData.map((experience) => (
-            <View key={experience.company} style={styles.article}>
-              {experience.logo ? (
-                <Image
-                  style={styles.logo}
-                  src={experience.logo}
-                  alt={experience.company + " logo"}
-                />
-              ) : (
-                <Image style={styles.logo} src={building} />
-              )}
-              <View>
-                <Text style={styles.articleTitle}>{experience.role}</Text>
-                <Text style={styles.articleSubtitle}>
-                  {experience.company} • {experience.location}
-                </Text>
-                <Text style={styles.articleDates}>
-                  {experience.start} - {experience.end}
-                </Text>
-                <Text style={styles.articleDescription}>
-                  {experience.responsibilities}
-                </Text>
+          {experienceData &&
+            experienceData.map((experience) => (
+              <View key={experience.company} style={styles.article}>
+                {experience.logo ? (
+                  <Image
+                    style={styles.logo}
+                    src={experience.logo}
+                    alt={experience.company + " logo"}
+                  />
+                ) : (
+                  <Image style={styles.logo} src={building} />
+                )}
+                <View>
+                  <Text style={styles.articleTitle}>{experience.role}</Text>
+                  <Text style={styles.articleSubtitle}>
+                    {experience.company} • {experience.location}
+                  </Text>
+                  <Text style={styles.articleDates}>
+                    {experience.start} - {experience.end}
+                  </Text>
+                  <Text style={styles.articleDescription}>
+                    {experience.responsibilities}
+                  </Text>
+                </View>
               </View>
-            </View>
-          ))}
+            ))}
         </View>
       </Page>
     </Document>
